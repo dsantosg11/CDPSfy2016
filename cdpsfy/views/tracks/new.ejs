@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<script type="text/javascript">
+function check(formulario,track,cover){
+ //Comprobamos que se ha subido una canción
+ if(!track){
+  alert("Por favor, suba una canción");
+  return false;
+ }
+ //Y ahora comprobamos extensiones. Código parcial modificado de http://www.desarrolloweb.com/articulos/validar-extension-archivo-con-javascript.html
+  if(cover){
+  var extensiones_permitidas_imagen = new Array(".gif", ".jpg", ".jpeg", ".png");
+  var extension_cover = (cover.substring(cover.lastIndexOf("."))).toLowerCase();
+  var coverpermitida=false;
+  for (var i = 0; i < extensiones_permitidas_imagen.length; i++) { 
+      if (extensiones_permitidas_imagen[i] == extension_cover) { 
+          coverpermitida = true; 
+          break; 
+      } 
+  } 
+     if (coverpermitida==false) { 
+         alert("Comprueba la extensión de la imagen a subir. \nSólo se pueden subir canciones con extensiones: GIF, JPG, JPEG y PNG");
+         return false; 
+     } 
+ }
+ var extensiones_permitidas_musica = new Array(".mp3", ".wav", ".ogg");
+ var extension_track = (track.substring(track.lastIndexOf("."))).toLowerCase();
+ var trackPermitida=false;
+ for (var i = 0; i < extensiones_permitidas_musica.length; i++) { 
+         if (extensiones_permitidas_musica[i] == extension_track) { 
+         trackPermitida = true; 
+         break; 
+         } 
+ }    
+ if (trackPermitida==false) { 
+   alert("Comprueba la extensión de la canción a subir. \nSólo se pueden subir canciones con extensiones: MP3, WAV y OGG");
+   return false; 
+ } 
+
+formulario.submit(); 
+return true;
+}</script>
+</head>
+    
+<body>
+<form action="/tracks" method="post" enctype="multipart/form-data">  
+  <label class="upload_field">Upload a new track:</label>
+  <input class="upload_field" type="file" name="track"/>
+  <label class="upload_field">Upload a new cover (or not):</label>
+  <input class="upload_field" type="file" name="cover"/>
+  <button class="hint upload_field" type="submit" onclick="return check(this.form, this.form.track.value, this.form.cover.value)">Upload</button>
+  <span class="hint upload_field">Supported files for track: MP3, Wav, and Ogg</span>
+  <span class="hint upload_field">Supported files for cover: PNG</span>
+</form>
+    </body></html>
